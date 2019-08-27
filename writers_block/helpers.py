@@ -28,9 +28,17 @@ def startup():
     else:
         return []
 
-
-def _proof_placeholder(i, prev_proof, modulo=10):
+def _placeholder_algorithm(i, prev_proof, modulo=10):
     return (i % modulo == 0 and i % prev_proof == 0)
+
+def prove_work(prev_proof):
+
+    i = prev_proof + 1
+
+    while not _placeholder_algorithm(i, prev_proof):
+        i += 1
+
+    return i
 
 
 def make_genesis_block():
@@ -38,14 +46,16 @@ def make_genesis_block():
     genesis = Block(
         index=0,
         timestamp=datetime.datetime.now(),
-        data='initial commit',
+        data={'proof': 1},
         prev_hash='0'
     )
 
     print(
         f'Genesis block has been added to blockchain [ length: 1 ]\n'
-        f'Hash: {block.hash}\n'
+        f'Hash: {genesis.hash}\n'
     )
+
+    return genesis
 
 
 def make_next_block(prev_block, data=None):
@@ -55,7 +65,7 @@ def make_next_block(prev_block, data=None):
     next_hash = prev_block.hash
 
     if not data:
-        data = f'This is block #{index}'
+        data = {'proof': prove_work(prev_block.data['proof'])}
 
     return Block(index, timestamp, data, next_hash)
 
@@ -84,11 +94,3 @@ def initialize_chain(num_blocks):
 
     return blockchain
 
-def prove_work(prev_proof):
-
-    i = prev_proof + 1
-
-    while not _proof_placeholder(i, prev_proof):
-        i + 1
-
-    return i
