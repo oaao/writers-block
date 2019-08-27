@@ -23,3 +23,28 @@ def make_next_block(prev_block, data=None):
         data = f'This is block #{index}'
 
     return Block(index, timestamp, data, next_hash)
+
+
+def initialize_chain(num_blocks):
+
+    # account for 'free' genesis block
+    n = num_blocks - 1
+
+    print(f'Initializing blockchain with {n} blocks\n')
+
+    blockchain = [make_genesis_block()]
+    prev_block = blockchain[0]
+
+    for i in range(num_blocks):
+
+        block = make_next_block(prev_block)
+        blockchain.append(block)
+
+        print(
+            f'Block #{block.index} has been added to blockchain [ length: {len(blockchain)} ]\n'
+            f'Hash: {block.hash}\n'
+        )
+
+        prev_block = block
+
+    return blockchain
