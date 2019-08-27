@@ -1,9 +1,11 @@
 from flask import Flask, request
 
-from helpers import make_genesis_block, make_next_block, initialize_chain
+from helpers import startup
 
 
 node = Flask(__name__)
+
+blockchain = startup()
 
 node_transactions = []
 
@@ -25,5 +27,3 @@ def transaction():
     return "transaction successfully submitted"
 
 node.run()
-
-# new_blockchain = initialize_chain(25)
