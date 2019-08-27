@@ -1,6 +1,33 @@
 import datetime
+import inquirer
 
 from objects import Block
+
+
+def startup():
+
+    configs = [
+        inquirer.List(
+            'new',
+            message='Are you generating a new blockchain or participating in an existing one?',
+            choices=['new blockchain', 'existing blockchain'],
+            default='new blockchain'
+        ),
+
+        inquirer.Text(
+            'num',
+            message='How many blocks should be generated in the initial chain?',
+            default='10',
+            validate=lambda _, x: re.match('\d+', x),
+        ),
+    ]
+
+    start = inquirer.prompt(configs)
+
+    if start['new'] == 'new blockchain':
+        return initialize_chain(int(start['num']))
+    else:
+        return []
 
 
 def _proof_placeholder(i, prev_proof, modulo=10):
