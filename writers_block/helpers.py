@@ -18,7 +18,6 @@ def startup():
             'num',
             message='How many blocks should be generated in the initial chain?',
             default='10',
-            validate=lambda _, x: re.match('\d+', x),
         ),
     ]
 
@@ -36,11 +35,16 @@ def _proof_placeholder(i, prev_proof, modulo=10):
 
 def make_genesis_block():
 
-    return Block(
+    genesis = Block(
         index=0,
         timestamp=datetime.datetime.now(),
         data='initial commit',
         prev_hash='0'
+    )
+
+    print(
+        f'Genesis block has been added to blockchain [ length: {len(blockchain)} ]\n'
+        f'Hash: {block.hash}\n'
     )
 
 
