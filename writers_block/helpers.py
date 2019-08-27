@@ -43,7 +43,7 @@ def make_genesis_block():
     )
 
     print(
-        f'Genesis block has been added to blockchain [ length: {len(blockchain)} ]\n'
+        f'Genesis block has been added to blockchain [ length: 1 ]\n'
         f'Hash: {block.hash}\n'
     )
 
