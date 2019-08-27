@@ -3,6 +3,10 @@ import datetime
 from objects import Block
 
 
+def _proof_placeholder(i, prev_proof, modulo=10):
+    return (i % modulo == 0 and i % prev_proof == 0)
+
+
 def make_genesis_block():
 
     return Block(
@@ -48,3 +52,12 @@ def initialize_chain(num_blocks):
         prev_block = block
 
     return blockchain
+
+def prove_work(prev_proof):
+
+    i = prev_proof + 1
+
+    while not _proof_placeholder(i, prev_proof):
+        i + 1
+
+    return i
