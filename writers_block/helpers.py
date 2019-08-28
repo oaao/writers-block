@@ -31,6 +31,7 @@ def startup():
 def _placeholder_algorithm(i, prev_proof, modulo=10):
     return (i % modulo == 0 and i % prev_proof == 0)
 
+
 def prove_work(prev_proof):
 
     i = prev_proof + 1
