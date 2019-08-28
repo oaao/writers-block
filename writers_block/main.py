@@ -10,9 +10,16 @@ from objects import Block
 
 node = Flask(__name__)
 
+# a list of Blocks
+# can initialize with some blocks if new,
+# or empty if participating in an existing chain
 blockchain = startup()
 
+# a list of transaction dictionaries
 node_transactions = []
+
+# list of URL strings for any peer nodes
+peers = []
 
 
 @node.route('/transaction', methods=['POST'])
@@ -30,6 +37,7 @@ def transaction():
     )
 
     return "transaction successfully submitted"
+
 
 @node.route('/automine', methods=['GET'])
 def automine():
@@ -80,5 +88,25 @@ def automine():
 
     return resp + '\n'
 
+
+@node.route('/blocks', methods=['GET'])
+def get_blocks():
+
+    # transform Blocks into dictionaries
+    # so they can be JSON-serialized and sent
+    send_chain = [
+        {
+            'index':     str(block.index),
+            'timestamp': str(block.timestamp),
+            'data':      str(block.data),
+            'last_hash': block.hash
+        }
+        for block in blockchain
+    ]
+
+    # return a JSON-encoded payload of the blockchain
+    # as the HTTP response
+    chain_as_payload = json.dumps(send_chain)
+    return chain_as_payload
 
 node.run()
