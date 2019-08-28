@@ -1,5 +1,7 @@
 import datetime
 import inquirer
+import json
+import requests
 
 from objects import Block
 
@@ -95,3 +97,31 @@ def initialize_chain(num_blocks):
 
     return blockchain
 
+
+def find_peer_chains(peers):
+    """ Returns all other peer blockchains when passed a list of peer URLs """
+
+    peer_chains = []
+
+    for peer_node in peers:
+        resp  = requests.get(f'{peer_node}/blocks')
+        block = json.loads(resp.content)
+
+        peer_chains.append(block)
+
+    return peer_chains
+
+
+def get_consensus_chain(peers):
+
+    peer_chains = find_peer_chains(peers)
+
+    # if the local chain is not currently the longest,
+    # replace it with the longest one
+    longest = blockchain
+
+    for chain in peer_chains:
+        if len(longest) < len(chain):
+            longest = chain
+
+    blockchain = longest
