@@ -1,7 +1,7 @@
 # writers-block
 
 <p align="center">
-    <a href="https://brown.edu/Departments/Joukowsky_Institute/events/violenceandcivilization/6843.html"><img src="https://i.imgur.com/M0mazbN.jpg" height="135" width="107"></a>
+    <a href="https://archive.is/WJZMd"><img src="https://i.imgur.com/M0mazbN.jpg" height="135" width="107"></a>
 </p>
 
 :clap: IT'S :clap: BLOCKCHAIN :clap: TIME :clap:
